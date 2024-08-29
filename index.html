@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:1,500;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+  <script src="./pristine.min.js" type="text/javascript" defer></script>
+  <script src="./main.js" type="text/javascript" defer></script>
+  <title>Frontend Mentor | Mortgage repayment calculator</title>
+</head>
+
+<body>
+  <main class="main">
+    <article class="card">
+      <section class="content">
+        <h1 class="title">Mortgage calculator</h1>
+        <button type="button" class="clear-button button button--ghost">Clear all</button>
+        <form action="" class="calculator" id="mortgage">
+          <div class="form-group">
+            <label class="field-label" for="amount">Mortgage amount</label>
+            <div class="input-wrapper" data-content="&pound;">
+              <input type="text" name="amount" id="amount" required inputmode="numeric" maxlength="18">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="field-label" for="years">Mortgage term</label>
+            <div class="input-wrapper" data-content="years">
+              <input type="text" name="years" id="years" required inputmode="numeric" maxlength="5">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="field-label" for="interestRate">Interest rate</label>
+            <div class="input-wrapper" data-content="&percnt;">
+              <input type="text" name="interestRate" id="interestRate" required inputmode="numeric" maxlength="5">
+            </div>
+          </div>
+          <fieldset class="radio-choice form-group">
+            <legend class="field-label">Mortgage type</legend>
+            <label>
+              <input type="radio" name="morgageType" id="repayment" value="repayment" required>
+              Repayment
+              <span class="radio"></span>
+              <span class="backdrop"></span>
+            </label>
+            <label>
+              <input type="radio" name="morgageType" id="interest" value="interest only" required>
+              Interest only
+              <span class="radio"></span>
+              <span class="backdrop"></span>
+            </label>
+          </fieldset>
+          <button type="submit" class="button button--accent"><svg xmlns="http://www.w3.org/2000/svg" width="24"
+              height="24" fill="none" viewBox="0 0 24 24">
+              <path fill="#133041"
+                d="M18.75 2.25H5.25a1.5 1.5 0 0 0-1.5 1.5v16.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V3.75a1.5 1.5 0 0 0-1.5-1.5Zm-10.5 16.5a1.125 1.125 0 1 1 0-2.25 1.125 1.125 0 0 1 0 2.25Zm0-3.75a1.125 1.125 0 1 1 0-2.25 1.125 1.125 0 0 1 0 2.25ZM12 18.75a1.125 1.125 0 1 1 0-2.25 1.125 1.125 0 0 1 0 2.25ZM12 15a1.125 1.125 0 1 1 0-2.25A1.125 1.125 0 0 1 12 15Zm3.75 3.75a1.125 1.125 0 1 1 0-2.25 1.125 1.125 0 0 1 0 2.25Zm0-3.75a1.125 1.125 0 1 1 0-2.25 1.125 1.125 0 0 1 0 2.25Zm1.5-5.25a.75.75 0 0 1-.75.75h-9a.75.75 0 0 1-.75-.75V6a.75.75 0 0 1 .75-.75h9a.75.75 0 0 1 .75.75v3.75Z" />
+            </svg>Calculate repayments</button>
+        </form>
+      </section>
+      <section class="result">
+        <div class="empty">
+          <div class="decor">
+            <img src="./assets/images/illustration-empty.svg" alt="" aria-hidden="true" width="192" height="192">
+          </div>
+          <h2 class="title">
+            Results shown here
+          </h2>
+          <p class="text">
+            Complete the form and click “calculate repayments” to see what
+            your monthly repayments would be.
+          </p>
+        </div>
+        <div class="completed hidden">
+          <h2 class="title">
+            Your results
+          </h2>
+          <p class="text">
+            Your results are shown below based on the information you provided.
+            To adjust the results, edit the form and click “calculate repayments” again.
+          </p>
+          <div class="output">
+            <div class="monthly">
+              <h3 class="title">
+                Your monthly repayments
+              </h3>
+              <output form="mortgage" name="monthly-repayments"
+                for="amount years interestRate"><span>&pound;</span><span
+                  class="js-monthly-output"></span></output>
+            </div>
+            <hr>
+            <div class="total">
+              <h3 class="title">
+                Total you'll repay over the term
+              </h3>
+              <output form="mortgage" name="total-repayment" for="amount years interestRate"><span>&pound;</span><span
+                  class="js-total-output"></span></output>
+            </div>
+          </div>
+        </div>
+      </section>
+    </article>
+  </main>
+  <div class="attribution">
+    Challenge by <a href="https://www.frontendmentor.io?ref=challenge">Frontend Mentor</a>.
+    Coded by <a href="#">Your Name Here</a>.
+  </div>
+</body>
+
+</html>
