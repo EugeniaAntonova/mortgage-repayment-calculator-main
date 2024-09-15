@@ -2,14 +2,17 @@ const textInputs = [...document.querySelectorAll('input[type="text"]')];
 
 const onTextInput = (evt) => {
     let key = evt.key;
-    if (!key.match(/[\d\.]|escape|enter|tab|arrow.+|delete|backspace/gi)) evt.preventDefault();
+    if (!key.match(/[\d\.]|escape|enter|tab|arrow.+|delete|backspace/gi) || key == 'Dead') {
+        evt.preventDefault()
+    };
 }
 
 const currencyValue = (value) => {
     return Number(value).toLocaleString('en-GB');
 }
 
-const cutValue = (value) => {
+const cutValue = (rawValue) => {
+    let value = rawValue.replaceAll(/[^0-9.]+/g, '');
     if (value.includes('.')) {
 
         let str = value.match(/\d+\.{1}\d{0,2}/gi);
@@ -37,6 +40,9 @@ window.onload = function () {
 
     let form = document.querySelector('form');
 
+    const clearAllButton = document.querySelector('.clear-button');
+    clearAllButton.addEventListener('click', () => onClearAll(form));
+
     const prevData = JSON.parse(sessionStorage.getItem('data'));
     if (prevData) {
         if (Object.keys(prevData).length !== 0) {
@@ -51,8 +57,8 @@ window.onload = function () {
 
         var valid = pristine.validate();
         if (valid) {
-            let total = parseFloat(form.querySelector('input[name="amount"]').value.replace(',', ''));
-            let term = parseFloat(form.querySelector('input[name="years"]').value.replace(',', ''));
+            let total = parseFloat(form.querySelector('input[name="amount"]').value.replaceAll(/[^0-9.]+/g, ''));
+            let term = parseFloat(form.querySelector('input[name="years"]').value.replace(/[^0-9.]+/g, ''));
             let interestRate = parseFloat(form.querySelector('input[name="interestRate"]').value);
             let mode = form.querySelector('input[name="morgageType"]:checked').value;
 
@@ -68,6 +74,7 @@ window.onload = function () {
 };
 
 function calculateMortgage(total, term, interestRate) {
+    console.log('calculateMortgage', total);
     let monthInterestPayments = (((total / 3) * 2) * (interestRate / 100)) / 12;
     let termMonths = term * 12;
     let totalInterestRepayments = monthInterestPayments * termMonths;
@@ -115,4 +122,22 @@ function fillInPrevData(form, data) {
 
     const { monthInterestPayments, totalInterestRepayments, avgMonthlyCapitalRepayments, totalRepaiment } = calculateMortgage(total, term, interestRate);
     showResults(monthInterestPayments, totalInterestRepayments, avgMonthlyCapitalRepayments, totalRepaiment, mode);
+}
+
+function onClearAll(form) {
+    form.reset();
+
+    const completedSection = document.querySelector('.js-result-completed');
+    const emptySection = document.querySelector('.js-result-empty');
+
+    const monthlyOutput = document.querySelector('.js-monthly-output');
+    const totalOutput = document.querySelector('.js-total-output');
+
+    monthlyOutput.textContent = '';
+    totalOutput.textContent = '';
+
+    emptySection.classList.replace('hidden', 'shown');
+    completedSection.classList.replace('shown', 'hidden');
+
+    sessionStorage.setItem('data', null);
 }
